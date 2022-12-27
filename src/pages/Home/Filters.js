@@ -1,43 +1,113 @@
 import { Stack } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterAccordion from "../../components/FilterAccordion";
+import { useSelector, useDispatch } from "react-redux";
+import { updateCurrentProducts, updateFilteredProducts } from "../../redux/slice/productsSlice";
 
 const Filters = () => {
-  const [colorFilters, setColorFilters] = useState([
-    { name: "Red" },
-    { name: "Blue" },
-    { name: "Green" },
-  ].map(filter => ({...filter, checked: false})));
-  const initialFilterState = [
-    {
-      name: "Color",
-      items: [{ name: "Red" }, { name: "Blue" }, { name: "Green" }],
-    },
-    {
-      name: "Gender",
-      items: [{ name: "Men" }, { name: "Women" }],
-    },
-    {
-      name: "Price",
-      items: [
-        { name: "₹0-₹250" },
-        { name: "₹251-₹450" },
-        { name: "Above ₹450" },
-      ],
-    },
-    {
-      name: "Type",
-      items: [{ name: "Polo" }, { name: "Hoodie" }, { name: "Basic" }],
-    },
-  ].map((filter) => ({...filter, items: filter.items.map(item => ({...item, checked: false}))}));
+  const { allProducts, searchProducts } = useSelector(
+    (state) => state.products
+  );
+  const dispatch = useDispatch();
 
-  const [filters, setFilters] = useState(initialFilterState);
+  const getAvailabelFilters = (products, filter) => {
+    const filters = [...new Set(products.map((product) => product[filter]))];
+    const filtersObject = filters.reduce((object, filter) => {
+      return { ...object, [filter]: false };
+    }, {});
+    return filtersObject;
+  };
+
+  const getSelectedFilters = (filter) => {
+    return Object.entries(filter)
+      .filter((filter) => filter[1])
+      .map((filter) => filter[0]);
+  };
+
+  const getFilteredProducts = (products, filter, targetFilters) => {
+    return products.filter(product => targetFilters.includes(product[filter]));
+  }
+
+  const [colorFilters, setColorFilters] = useState({});
+  const [genderFilters, setGenderFilters] = useState({});
+  const [typeFilters, setTypeFilters] = useState({});
+
+  const selectedColorFilters = getSelectedFilters(colorFilters);
+  const selectedGenderFilters = getSelectedFilters(genderFilters);
+  const selectedTypeFilters = getSelectedFilters(typeFilters);
+
+  const updateProducts = () => {
+    let products = searchProducts.length ? searchProducts : allProducts;
+
+    if (!selectedColorFilters.length && !selectedGenderFilters.length && !selectedTypeFilters.length) {
+      dispatch(updateFilteredProducts(products));
+      return;
+    }
+
+    if (selectedGenderFilters.length) {
+      products = products.filter(product => selectedGenderFilters.includes(product.gender)); 
+    }
+
+    if (!selectedColorFilters.length && !selectedTypeFilters.length) {
+      dispatch(updateFilteredProducts(products));
+      return;
+    }
+
+    const filteredProducts = products.filter(product => {
+      return selectedColorFilters.includes(product.color) || selectedTypeFilters.includes(product.type);
+    })
+
+    dispatch(updateFilteredProducts(filteredProducts));
+  }
+
+  useEffect(() => {
+    setColorFilters(getAvailabelFilters(allProducts, "color"));
+    setGenderFilters(getAvailabelFilters(allProducts, "gender"));
+    setTypeFilters(getAvailabelFilters(allProducts, "type"));
+  }, [allProducts]);
+
+  useEffect(() => {
+    updateProducts();
+  }, [colorFilters, genderFilters, typeFilters])
+
+  const handleOnColorFilterChange = (event) => {
+    setColorFilters((state) => ({
+      ...state,
+      [event.target.name]: !state[event.target.name],
+    }));
+  };
+
+  const handleOnGenderFilterChange = (event) => {
+    setGenderFilters((state) => ({
+      ...state,
+      [event.target.name]: !state[event.target.name],
+    }));
+  };
+
+  const handleOnTypeFilterChange = (event) => {
+    setTypeFilters((state) => ({
+      ...state,
+      [event.target.name]: !state[event.target.name],
+    }));
+  };
 
   return (
     <>
-      {filters.map((filter, index) => (
-        <FilterAccordion key={index} filter={filter} setFilters={setFilters} />
-      ))}
+      <FilterAccordion
+        filter={colorFilters}
+        filterCategory="Color"
+        handleOnFilterChange={handleOnColorFilterChange}
+      />
+      <FilterAccordion
+        filter={genderFilters}
+        filterCategory="Gender"
+        handleOnFilterChange={handleOnGenderFilterChange}
+      />
+      <FilterAccordion
+        filter={typeFilters}
+        filterCategory="Type"
+        handleOnFilterChange={handleOnTypeFilterChange}
+      />
     </>
   );
 };

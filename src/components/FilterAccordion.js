@@ -9,31 +9,34 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const FilterAccordion = ({ filter, setFilters }) => {
-  const handleOnChange = (event) => {
-    console.dir(event.target.dataset.category)
-    
-    setFilters(state => {
-      const filteredState = state.filter(filterItem => filterItem.name !== event.target.dataset.category);
-      console.log(filteredState);
-      return state;
-    })
-  }
-console.log(filter)
-  const filterItems = filter.items.map((filterItem, index) => (
-    <FormControlLabel key={index} control={<Checkbox checked={filterItem.checked} inputProps={{'data-category': filter.name}} onChange={handleOnChange} />} label={filterItem.name} />
-  ));
+const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange }) => {
 
+  const filterItems = Object.entries(filter).map((filterItem, index) => {
+    return <FormControlLabel
+      key={index}
+      control={
+        <Checkbox
+          checked={filterItem[1]}
+          inputProps={{ "data-category": filterCategory }}
+          onChange={handleOnFilterChange}
+          name={filterItem[0]}
+        />
+      }
+      label={`${filterItem[0].charAt(0).toUpperCase()}${filterItem[0]
+        .split("").slice(1)
+        .join("")}`}
+    />
+  });
 
   return (
-    <Accordion defaultExpanded={true} elevation={0} >
+    <Accordion defaultExpanded={true} elevation={0}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
-        aria-controls={filter.name}
-        id={filter.name}
+        aria-controls={filterCategory}
+        id={filterCategory}
       >
         <Typography variant="body1" component="h6">
-          {filter.name}
+          {filterCategory}
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
