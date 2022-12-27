@@ -1,15 +1,21 @@
 import "./App.css";
-import Home from "./pages/Home/Home";
+import Products from "./pages/Products/";
+import Cart from './pages/Cart';
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
-import { TextField } from "@mui/material";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-        <Home />
-      </ThemeProvider>
+      <Router>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path="/" element={<Products />} />
+            <Route path='/cart' element={<Cart />} />
+          </Routes>
+        </ThemeProvider>
+      </Router>
     </div>
   );
 }

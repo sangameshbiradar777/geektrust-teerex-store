@@ -28,8 +28,6 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  console.log(products);
-
   const productCards = products.map((product) => (
     <Grid item xs={12} key={product.id}>
       <ProductCard product={product} />

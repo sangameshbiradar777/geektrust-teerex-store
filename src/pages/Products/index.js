@@ -1,4 +1,4 @@
-import Header from "./Header";
+import Header from "../../components/Header";
 import Filters from "./Filters";
 import Products from "./Products";
 import { Grid } from "@mui/material";

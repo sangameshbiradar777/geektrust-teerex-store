@@ -1,16 +1,17 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 function useDebounce(executableFunction, ms)  {
-  // const [timerId, setTimerId] = useState(null)
+  const timerId = useRef(null);
 
-  // if (timerId.current) clearTimeout(timerId.current);
+  const debounce = (executableFunction, ms) => {
+    if (timerId.current) clearTimeout(timerId.current);
 
-  // const newTimerId = setTimeout(executableFunction, ms);
-  // timerId.current(newTimerId);
+    timerId.current = setTimeout(() => {
+      executableFunction();
+    }, ms);
+  }
 
-  // return timerId;
-
-  console.log('hi')
+  return debounce;
 }
 
 export default useDebounce;

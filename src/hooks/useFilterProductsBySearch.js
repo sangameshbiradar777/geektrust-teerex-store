@@ -14,8 +14,6 @@ const useFilterProductsBySearch = () => {
         gender.startsWith(searchText) ||
         price.startsWith(searchText) ||
         type.includes(searchText);
-      
-      if(isMatchingProduct) console.log("matching", product);
 
       return isMatchingProduct;
     });

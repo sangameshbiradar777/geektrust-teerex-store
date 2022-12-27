@@ -1,19 +1,30 @@
 import { useEffect, useState, useRef } from "react";
 import FilterAccordion from "../../components/FilterAccordion";
 import { useSelector, useDispatch } from "react-redux";
+import useDebounce from "../../hooks/useDebounce";
 import { updateCurrentProducts } from "../../redux/slice/productsSlice";
-import { updateFilters, updateFilteredProducts } from "../../redux/slice/filtersSlice";
+import {
+  updateFilters,
+  updateFilteredProducts,
+} from "../../redux/slice/filtersSlice";
 import useFilterProductsByCategory from "../../hooks/useFilterProductsByCategory";
-import RangeSlider from '../../components/RangeSlider';
+import RangeSlider from "../../components/RangeSlider";
 
 const Filters = () => {
+  const DEBOUNCE_TIME = 400;
   const { allProducts } = useSelector((state) => state.products);
-  const { colorFilters, genderFilters, typeFilters, searchText, searchProducts, filteredProducts } = useSelector(state => state.filters);
+  const {
+    colorFilters,
+    genderFilters,
+    typeFilters,
+    priceFilters,
+    searchText,
+    filteredProducts,
+  } = useSelector((state) => state.filters);
   const dispatch = useDispatch();
   const filterProductsByCategory = useFilterProductsByCategory();
   const isUserFilteredProducts = useRef();
-  const [priceFilters, setPriceFilters] = useState([250, 500]);
-
+  const debounce = useDebounce();
 
   const getAvailabelFilters = (products, filter) => {
     const filters = [...new Set(products.map((product) => product[filter]))];
@@ -23,38 +34,54 @@ const Filters = () => {
     return filtersObject;
   };
 
-
   useEffect(() => {
     if (!allProducts.length) return;
-    const availabeColorFilters = getAvailabelFilters(allProducts, 'color');
-    const availabeGenderFilters = getAvailabelFilters(allProducts, 'gender');
-    const availabeTypeFilters = getAvailabelFilters(allProducts, 'type');
-    const minPrice = Math.min(...allProducts.map(product => product.price));
-    const maxPrice = Math.max(...allProducts.map(product => product.price));
-    dispatch(updateFilters({ filters: availabeColorFilters, name: 'colorFilters' }));
-    dispatch(updateFilters({ filters: availabeGenderFilters, name: 'genderFilters' }));
-    dispatch(updateFilters({ filters: availabeTypeFilters, name: 'typeFilters' }));
-    setPriceFilters([minPrice, maxPrice]);
+    const availabeColorFilters = getAvailabelFilters(allProducts, "color");
+    const availabeGenderFilters = getAvailabelFilters(allProducts, "gender");
+    const availabeTypeFilters = getAvailabelFilters(allProducts, "type");
+    const minPrice = Math.min(...allProducts.map((product) => product.price));
+    const maxPrice = Math.max(...allProducts.map((product) => product.price));
+    dispatch(
+      updateFilters({ filters: availabeColorFilters, name: "colorFilters" })
+    );
+    dispatch(
+      updateFilters({ filters: availabeGenderFilters, name: "genderFilters" })
+    );
+    dispatch(
+      updateFilters({ filters: availabeTypeFilters, name: "typeFilters" })
+    );
+    dispatch(updateFilters({filters: [minPrice, maxPrice], name: 'priceFilters'}))
   }, [allProducts]);
 
   useEffect(() => {
     if (!isUserFilteredProducts.current) return;
-    const filteredProducts = filterProductsByCategory(colorFilters, genderFilters, typeFilters, searchProducts, allProducts);
-    dispatch(updateFilteredProducts(filteredProducts));
-
-  }, [colorFilters, genderFilters, typeFilters, searchText])
+    debounce(() => {
+      console.log(priceFilters);
+      const filteredProducts = filterProductsByCategory(
+        colorFilters,
+        genderFilters,
+        typeFilters,
+        priceFilters,
+        searchText,
+        allProducts
+      );
+      dispatch(updateFilteredProducts(filteredProducts));
+    }, DEBOUNCE_TIME)
+  }, [colorFilters, genderFilters, typeFilters, priceFilters, searchText]);
 
   useEffect(() => {
     if (!isUserFilteredProducts.current) return;
-    dispatch(updateCurrentProducts(filteredProducts))
-  }, [filteredProducts])
+    dispatch(updateCurrentProducts(filteredProducts));
+  }, [filteredProducts]);
 
   const handleOnColorFilterChange = (event) => {
     const updatedColorFilters = {
       ...colorFilters,
       [event.target.name]: !colorFilters[event.target.name],
-    }
-    dispatch(updateFilters({ filters: updatedColorFilters, name: 'colorFilters' }))
+    };
+    dispatch(
+      updateFilters({ filters: updatedColorFilters, name: "colorFilters" })
+    );
     isUserFilteredProducts.current = true;
   };
 
@@ -80,10 +107,10 @@ const Filters = () => {
     isUserFilteredProducts.current = true;
   };
 
-  const handleOnPriceFilterChange = (event, value) => {
-    console.log(value);
-    setPriceFilters(value);
-  }
+  const handleOnPriceFilterChange = (_, value) => {
+    dispatch(updateFilters({ filters: value, name: 'priceFilters' }))
+    isUserFilteredProducts.current = true;
+  };
 
   return (
     <>
@@ -100,7 +127,10 @@ const Filters = () => {
       <FilterAccordion
         filterCategory="Price"
         render={() => (
-          <RangeSlider value={priceFilters} onChange={handleOnPriceFilterChange} />
+          <RangeSlider
+            value={priceFilters}
+            onChange={handleOnPriceFilterChange}
+          />
         )}
         isRangeSlider
       />

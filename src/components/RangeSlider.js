@@ -5,7 +5,7 @@ const RangeSlider = ({value,  onChange }) => {
   return (
     <Box sx={{marginTop: 5, paddingLeft: 2, paddingRight: 2}}>
       <Slider
-        getAriaLabel={() => "Temperature range"}
+        getAriaLabel={() => "Price Filter"}
         value={value}
         min={250}
         max={500}
