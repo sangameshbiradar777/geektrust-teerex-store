@@ -1,14 +1,19 @@
-import { Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import FilterAccordion from "../../components/FilterAccordion";
 import { useSelector, useDispatch } from "react-redux";
-import { updateCurrentProducts, updateFilteredProducts } from "../../redux/slice/productsSlice";
+import { updateCurrentProducts } from "../../redux/slice/productsSlice";
+import { updateFilters, updateFilteredProducts } from "../../redux/slice/filtersSlice";
+import useFilterProductsByCategory from "../../hooks/useFilterProductsByCategory";
+import RangeSlider from '../../components/RangeSlider';
 
 const Filters = () => {
-  const { allProducts, searchProducts } = useSelector(
-    (state) => state.products
-  );
+  const { allProducts } = useSelector((state) => state.products);
+  const { colorFilters, genderFilters, typeFilters, searchText, searchProducts, filteredProducts } = useSelector(state => state.filters);
   const dispatch = useDispatch();
+  const filterProductsByCategory = useFilterProductsByCategory();
+  const isUserFilteredProducts = useRef();
+  const [priceFilters, setPriceFilters] = useState([250, 500]);
+
 
   const getAvailabelFilters = (products, filter) => {
     const filters = [...new Set(products.map((product) => product[filter]))];
@@ -18,78 +23,67 @@ const Filters = () => {
     return filtersObject;
   };
 
-  const getSelectedFilters = (filter) => {
-    return Object.entries(filter)
-      .filter((filter) => filter[1])
-      .map((filter) => filter[0]);
-  };
-
-  const getFilteredProducts = (products, filter, targetFilters) => {
-    return products.filter(product => targetFilters.includes(product[filter]));
-  }
-
-  const [colorFilters, setColorFilters] = useState({});
-  const [genderFilters, setGenderFilters] = useState({});
-  const [typeFilters, setTypeFilters] = useState({});
-
-  const selectedColorFilters = getSelectedFilters(colorFilters);
-  const selectedGenderFilters = getSelectedFilters(genderFilters);
-  const selectedTypeFilters = getSelectedFilters(typeFilters);
-
-  const updateProducts = () => {
-    let products = searchProducts.length ? searchProducts : allProducts;
-
-    if (!selectedColorFilters.length && !selectedGenderFilters.length && !selectedTypeFilters.length) {
-      dispatch(updateFilteredProducts(products));
-      return;
-    }
-
-    if (selectedGenderFilters.length) {
-      products = products.filter(product => selectedGenderFilters.includes(product.gender)); 
-    }
-
-    if (!selectedColorFilters.length && !selectedTypeFilters.length) {
-      dispatch(updateFilteredProducts(products));
-      return;
-    }
-
-    const filteredProducts = products.filter(product => {
-      return selectedColorFilters.includes(product.color) || selectedTypeFilters.includes(product.type);
-    })
-
-    dispatch(updateFilteredProducts(filteredProducts));
-  }
 
   useEffect(() => {
-    setColorFilters(getAvailabelFilters(allProducts, "color"));
-    setGenderFilters(getAvailabelFilters(allProducts, "gender"));
-    setTypeFilters(getAvailabelFilters(allProducts, "type"));
+    if (!allProducts.length) return;
+    const availabeColorFilters = getAvailabelFilters(allProducts, 'color');
+    const availabeGenderFilters = getAvailabelFilters(allProducts, 'gender');
+    const availabeTypeFilters = getAvailabelFilters(allProducts, 'type');
+    const minPrice = Math.min(...allProducts.map(product => product.price));
+    const maxPrice = Math.max(...allProducts.map(product => product.price));
+    dispatch(updateFilters({ filters: availabeColorFilters, name: 'colorFilters' }));
+    dispatch(updateFilters({ filters: availabeGenderFilters, name: 'genderFilters' }));
+    dispatch(updateFilters({ filters: availabeTypeFilters, name: 'typeFilters' }));
+    setPriceFilters([minPrice, maxPrice]);
   }, [allProducts]);
 
   useEffect(() => {
-    updateProducts();
-  }, [colorFilters, genderFilters, typeFilters])
+    if (!isUserFilteredProducts.current) return;
+    const filteredProducts = filterProductsByCategory(colorFilters, genderFilters, typeFilters, searchProducts, allProducts);
+    dispatch(updateFilteredProducts(filteredProducts));
+
+  }, [colorFilters, genderFilters, typeFilters, searchText])
+
+  useEffect(() => {
+    if (!isUserFilteredProducts.current) return;
+    dispatch(updateCurrentProducts(filteredProducts))
+  }, [filteredProducts])
 
   const handleOnColorFilterChange = (event) => {
-    setColorFilters((state) => ({
-      ...state,
-      [event.target.name]: !state[event.target.name],
-    }));
+    const updatedColorFilters = {
+      ...colorFilters,
+      [event.target.name]: !colorFilters[event.target.name],
+    }
+    dispatch(updateFilters({ filters: updatedColorFilters, name: 'colorFilters' }))
+    isUserFilteredProducts.current = true;
   };
 
   const handleOnGenderFilterChange = (event) => {
-    setGenderFilters((state) => ({
-      ...state,
-      [event.target.name]: !state[event.target.name],
-    }));
+    const updatedGenderFilters = {
+      ...genderFilters,
+      [event.target.name]: !genderFilters[event.target.name],
+    };
+    dispatch(
+      updateFilters({ filters: updatedGenderFilters, name: "genderFilters" })
+    );
+    isUserFilteredProducts.current = true;
   };
 
   const handleOnTypeFilterChange = (event) => {
-    setTypeFilters((state) => ({
-      ...state,
-      [event.target.name]: !state[event.target.name],
-    }));
+    const updatedTypeFilters = {
+      ...typeFilters,
+      [event.target.name]: !typeFilters[event.target.name],
+    };
+    dispatch(
+      updateFilters({ filters: updatedTypeFilters, name: "typeFilters" })
+    );
+    isUserFilteredProducts.current = true;
   };
+
+  const handleOnPriceFilterChange = (event, value) => {
+    console.log(value);
+    setPriceFilters(value);
+  }
 
   return (
     <>
@@ -103,6 +97,14 @@ const Filters = () => {
         filterCategory="Gender"
         handleOnFilterChange={handleOnGenderFilterChange}
       />
+      <FilterAccordion
+        filterCategory="Price"
+        render={() => (
+          <RangeSlider value={priceFilters} onChange={handleOnPriceFilterChange} />
+        )}
+        isRangeSlider
+      />
+
       <FilterAccordion
         filter={typeFilters}
         filterCategory="Type"

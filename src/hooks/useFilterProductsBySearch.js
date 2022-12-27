@@ -1,5 +1,6 @@
 const useFilterProductsBySearch = () => {
   const filterProductsBySearch = (products, searchText) => {
+    if (!searchText) return [];
     const filteredProducts = products.filter((product) => {
       const color = product.color.toLowerCase();
       const name = product.name.toLowerCase();
@@ -13,6 +14,8 @@ const useFilterProductsBySearch = () => {
         gender.startsWith(searchText) ||
         price.startsWith(searchText) ||
         type.includes(searchText);
+      
+      if(isMatchingProduct) console.log("matching", product);
 
       return isMatchingProduct;
     });

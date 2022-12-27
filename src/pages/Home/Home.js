@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <Grid container spacing={2} fontFamily={"Manrope"}>
       <Header />
-      <Grid item xs={3} spacing={3}>
+      <Grid item xs={3}>
         <Filters />
       </Grid>
       <Grid item xs={9}>

@@ -5,8 +5,6 @@ const productsSlice = createSlice({
   initialState: {
     allProducts: [],
     currentProducts: [],
-    filteredProducts: [],
-    searchProducts: [],
     isLoading: false,
     error: {}
   },
@@ -26,16 +24,8 @@ const productsSlice = createSlice({
     updateCurrentProducts: (state, action) => {
       state.currentProducts = action.payload;
     },
-    updateFilteredProducts: (state, action) => {
-      state.filteredProducts = action.payload;
-      state.currentProducts = action.payload;
-    },
-    updateSearchProducts: (state, action) => {
-      state.searchProducts = action.payload;
-      state.currentProducts = action.payload;
-    }
   }
 })
 
 export default productsSlice.reducer;
-export const { productsFetchStart, productsFetchSuccess, productsFetchFailure, updateCurrentProducts, updateFilteredProducts, updateSearchProducts } = productsSlice.actions;
+export const { productsFetchStart, productsFetchSuccess, productsFetchFailure, updateCurrentProducts,  } = productsSlice.actions;

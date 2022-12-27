@@ -1,54 +1,52 @@
 import { Box, TextField } from "@mui/material";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateSearchProducts } from "../redux/slice/productsSlice";
+import { updateCurrentProducts } from "../redux/slice/productsSlice";
+import {  updateSearchProducts } from '../redux/slice/filtersSlice';
+import useFilterProductsBySearch from "../hooks/useFilterProductsBySearch";
+import useFilterProductsByCategory from "../hooks/useFilterProductsByCategory";
 
 const Search = () => {
   const DEBOUNCE_TIME = 400; // IN MILLI_SECONDS
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
+  const { searchProducts, filteredProducts, colorFilters, genderFilters, typeFilters } = useSelector(state => state.filters);
   const timerId = useRef(null);
-  const { filteredProducts, allProducts } = useSelector(
+  const { allProducts } = useSelector(
     (state) => state.products
   );
   const dispatch = useDispatch();
+  const filterProductsBySearch = useFilterProductsBySearch();
+  const filterProductsByCategory = useFilterProductsByCategory();
+  const isUserSearched = useRef(false);
   
-
-
   const updateProducts = () => {
     let currentProducts = filteredProducts.length
     ? filteredProducts
-    : allProducts;
-    console.log('currentProducts: ', currentProducts);
-    
-    console.log(searchText)
-    if (!searchText) {
-      console.log('searchtext', currentProducts)
-      dispatch(updateSearchProducts(currentProducts));
-      return;
-    }
+      : allProducts;
 
-    let searchProducts = currentProducts.filter((product) => {
-      const color = product.color.toLowerCase();
-      const name = product.name.toLowerCase();
-      const gender = product.gender.toLowerCase();
-      const price = String(product.price).toLowerCase();
-      const type = product.type.toLowerCase();
-
-      const isMatchingProduct =
-        color.includes(searchText) ||
-        name.includes(searchText) ||
-        gender.startsWith(searchText) ||
-        price.startsWith(searchText) ||
-        type.includes(searchText);
-
-      return isMatchingProduct;
-    });
-    
-    dispatch(updateSearchProducts(searchProducts));
+    currentProducts = filterProductsBySearch(currentProducts, searchText);
+    dispatch(updateSearchProducts(currentProducts));
   };
+
+  useEffect(() => {
+    if (!isUserSearched.current) return;
+    let products = searchProducts;
+    if (!searchText) {
+      const filteredProducts = filterProductsByCategory(
+        colorFilters,
+        genderFilters,
+        typeFilters,
+        searchProducts,
+        allProducts
+      );
+      products = filteredProducts;
+    }
+    dispatch(updateCurrentProducts(products));
+  }, [searchProducts])
 
   const handleOnSearchTextChange = (event) => {
     setSearchText(event.target.value);
+    isUserSearched.current = true;
   };
 
   const debounceSearch = (executableFunction, ms) => {
@@ -62,6 +60,7 @@ const Search = () => {
   };
 
   useEffect(() => {
+    if (!isUserSearched.current) return;
     debounceSearch(updateProducts, DEBOUNCE_TIME);
   }, [searchText]);
 
