@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardMedia,
   CardContent,
@@ -11,6 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../redux/slice/cartSlice";
 
+
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.cart);
@@ -19,8 +21,6 @@ const ProductCard = ({ product }) => {
   const handleOnAddToCart = () => {
     dispatch(addToCart(product));
   };
-
-  // console.log(items);
 
   return (
     <Card>
@@ -34,9 +34,11 @@ const ProductCard = ({ product }) => {
         <Chip variant="contained" label={product.type} />
         <Chip variant="contained" label={product.gender} />
       </CardContent>
-      <CardActions>
-        <Typography>Price</Typography>
-        <Typography>Rs {product.price}</Typography>
+      <CardActions sx={{ justifyContent: "space-between" }}>
+        <Box>
+          <Typography>Price</Typography>
+          <Typography>Rs {product.price}</Typography>
+        </Box>
         <Button
           onClick={handleOnAddToCart}
           color="primary"

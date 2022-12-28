@@ -29,7 +29,7 @@ const Products = () => {
   }, []);
 
   const productCards = products.map((product) => (
-    <Grid item xs={12} key={product.id}>
+    <Grid item xs={12} sm={6} md={4} key={product.id}>
       <ProductCard product={product} />
     </Grid>
   ));
