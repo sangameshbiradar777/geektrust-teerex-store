@@ -5,12 +5,12 @@ import { Grid } from "@mui/material";
 
 const Home = () => {
   return (
-    <Grid container spacing={2} fontFamily={"Manrope"}>
+    <Grid container spacing={{xs: 5}}>
       <Header />
-      <Grid item xs={3}>
+      <Grid item py={2} md={2} sx={{display: {xs: 'none', md: 'block'}, borderRight: "1px solid #D9D9D9" }}>
         <Filters />
       </Grid>
-      <Grid item xs={9}>
+      <Grid item xs={12} p={2}>
         <Products />
       </Grid>
     </Grid>

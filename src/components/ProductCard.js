@@ -25,20 +25,25 @@ const ProductCard = ({ product }) => {
   return (
     <Card>
       <CardMedia
-        sx={{ height: 140 }}
+        sx={{
+          height: 180,
+          backgroundSize: "contain",
+          borderBottom: "1px solid #ccc",
+      }}
         image={product.imageURL}
         title={product.name}
       />
-      <CardContent>
-        <Typography>{product.name}</Typography>
-        <Chip variant="contained" label={product.type} />
-        <Chip variant="contained" label={product.gender} />
+      <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="subtitle2">{product.name}</Typography>
+        <Stack direction="row" spacing={0.5}>
+          <Chip variant="contained" label={product.type} />
+          <Chip variant="contained" label={product.gender} />
+        </Stack>
       </CardContent>
-      <CardActions sx={{ justifyContent: "space-between" }}>
-        <Box>
-          <Typography>Price</Typography>
-          <Typography>Rs {product.price}</Typography>
-        </Box>
+      <CardActions sx={{ padding: 2, justifyContent: "space-between" }}>
+        <Stack>
+          <Typography variant="subtitle1">₹{product.price}</Typography>
+        </Stack>
         <Button
           onClick={handleOnAddToCart}
           color="primary"

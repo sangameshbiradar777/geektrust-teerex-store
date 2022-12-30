@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box, OutlinedInput } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentProducts } from "../redux/slice/productsSlice";
@@ -75,12 +75,13 @@ const Search = () => {
   }, [searchText]);
 
   return (
-    <Box component="form">
-      <TextField
-        label="Search over 100+ products"
+    <Box component="form" sx={{flex: 1}}>
+      <OutlinedInput
+        size="small"
+        placeholder="Search over 100+ products"
         value={searchText}
         onChange={handleOnSearchTextChange}
-        variant="outlined"
+        sx={{width: '90%', borderRadius: 2}}
       />
     </Box>
   );

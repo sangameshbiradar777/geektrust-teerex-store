@@ -8,9 +8,9 @@ const HeaderContent = ({isCartPage}) => {
   return (
     <Stack
       direction="row"
-      justifyContent={isCartPage ? "flex-end" : "space-between"}
+      justifyContent={{xs: 'flex-end', md: 'space-between'}}
+      md={{justifyContent: 'flex-end'}}
       alignItems="center"
-      fontFamily="Manrope"
     >
       {isCartPage ? (
         <Link to="/">
@@ -18,7 +18,9 @@ const HeaderContent = ({isCartPage}) => {
         </Link>
       ) : (
         <>
-          <Search />
+          <Box sx={{ display: { xs: "none", md: "block" }, width: '100%' }}>
+            <Search />
+          </Box>
           <Link to="/cart">
             <CartButton />
           </Link>

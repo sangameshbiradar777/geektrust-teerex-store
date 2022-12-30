@@ -1,6 +1,7 @@
 import Header from "../../components/Header";
 import { Grid } from "@mui/material";
 import CartItems from "./CartItems";
+import CartSummary from "./CartSummary";
 
 const Cart = () => {
   return (
@@ -8,6 +9,7 @@ const Cart = () => {
       <Header isCartPage />
       <Grid container>
         <CartItems />
+        <CartSummary />
       </Grid>
     </Grid>
   )

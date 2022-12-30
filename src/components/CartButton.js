@@ -5,16 +5,17 @@ const CartButton = () => {
   const { items } = useSelector(state => state.cart);
   return (
     <Button
+      color='primary'
       sx={{
-        fontSize: "body1",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         gap: 1,
+        py: 1
       }}
-      variant="contained"
+      variant="outlined"
     >
-      <Typography component="p">Your Cart</Typography>
+      Your Cart
 
       <Badge badgeContent={items.length}>
         <ion-icon style={{ fontSize: "1.4rem" }} name="cart-outline"></ion-icon>

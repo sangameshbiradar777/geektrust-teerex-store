@@ -36,15 +36,16 @@ const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange, render,
   
 
   return (
-    <Accordion defaultExpanded={true} elevation={0}>
+    <Accordion
+      defaultExpanded={true}
+      elevation={0}
+    >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls={filterCategory}
         id={filterCategory}
       >
-        <Typography variant="body1" component="h6">
-          {filterCategory}
-        </Typography>
+        <Typography variant="subtitle1">{filterCategory}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <FormGroup>{isRangeSlider ? render() : getFilterItems()}</FormGroup>

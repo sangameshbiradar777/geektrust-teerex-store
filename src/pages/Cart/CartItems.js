@@ -13,8 +13,6 @@ const CartItems = () => {
     setItemToLocalStorage(storeCartItems);
   })
 
-  const cartItems = items.length || getItemFromLocalStorage() || [];
-
   return (
     <Box>
       <Typography variant="h3" component="h2">Cart</Typography>
