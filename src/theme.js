@@ -23,6 +23,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 6
+        }
+      }
+    }
   },
   typography: {
     fontFamily: ["Inter Tight", "sans-serif"].join(","),
@@ -31,33 +38,54 @@ const theme = createTheme({
       color: "#2A2A2A",
     },
     h2: {
-      fontSize: 35,
+      fontSize: 30,
       color: "#303030",
+      fontWeight: 500,
+    },
+    h5: {
+      fontSize: 22,
+      fontWeight: 400,
+      color: "#444",
+    },
+    h6: {
+      fontSize: 16,
+      fontWeight: 500,
+      color: '#444',
     },
     subtitle1: {
-      fontSize: 20,
+      fontSize: 18,
       color: "#303030",
       fontWeight: 500,
     },
     subtitle2: {
-      fontSize: 19,
+      fontSize: 17,
       color: "#444",
       fontWeight: 400,
     },
     body1: {
-      fontSize: 18,
+      fontSize: 16,
       color: "#525252",
     },
     body2: {
       fontSize: 15,
       color: "#737373",
     },
+    caption: {
+      fontSize: 19,
+      color: '#444'
+    }
   },
   palette: {
     primary: {
-      // main: "#0085FE",
-      main: "#2874F0",
+      // main: "#2874F0",
+      main: '#5333ed',
       contrastText: "#E8E8E8",
+    },
+    secondary: {
+      main: "#fff",
+      light: '#fff',
+      dark: '#fff',
+      contrastText: '#444'
     },
     textDark1: {
       main: "#2A2A2A",
@@ -83,7 +111,7 @@ const theme = createTheme({
     bgGrey2: {
       main: "#E8E8E8",
     },
-    danger: {
+    warning: {
       main: "#E67375",
     },
   },

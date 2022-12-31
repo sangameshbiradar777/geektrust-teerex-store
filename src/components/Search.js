@@ -81,7 +81,7 @@ const Search = () => {
         placeholder="Search over 100+ products"
         value={searchText}
         onChange={handleOnSearchTextChange}
-        sx={{width: '90%', borderRadius: 2}}
+        sx={{width: {xs: '95%', md: '80%'}, borderRadius: 2}}
       />
     </Box>
   );

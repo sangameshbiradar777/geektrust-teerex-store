@@ -2,10 +2,17 @@ import { CardContent, Typography } from "@mui/material";
 
 const CartItemErrorMessage = ({ maxQuantityErrorMessage, minQuantityErrorMessage }) => {
   return (
-    <CardContent sx={{color: 'red', py: 0}}>
-      { maxQuantityErrorMessage && <Typography>{maxQuantityErrorMessage}</Typography>}
-      {minQuantityErrorMessage && <Typography>{minQuantityErrorMessage}</Typography>}
-      
+    <CardContent sx={{ py: 1, textAlign: 'center' }}>
+      {maxQuantityErrorMessage && (
+        <Typography sx={{ color: "#E67375", lineHeight: 1.1 }}>
+          {maxQuantityErrorMessage}
+        </Typography>
+      )}
+      {minQuantityErrorMessage && (
+        <Typography sx={{ color: "#E67375", lineHeight: 1.1, }}>
+          {minQuantityErrorMessage}
+        </Typography>
+      )}
     </CardContent>
   );
 }

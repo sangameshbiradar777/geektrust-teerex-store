@@ -8,17 +8,19 @@ const HeaderContent = ({isCartPage}) => {
   return (
     <Stack
       direction="row"
-      justifyContent={{xs: 'flex-end', md: 'space-between'}}
-      md={{justifyContent: 'flex-end'}}
+      justifyContent={{ xs: "flex-end", md: "space-between" }}
       alignItems="center"
     >
       {isCartPage ? (
-        <Link to="/">
-          <Button variant="contained"> Products</Button>
+        <Link to="/" style={{marginLeft: 'auto'}}>
+          <Button variant="outlined" sx={{display: 'flex', alignItems: 'center', gap: 1}}>
+            <ion-icon style={{fontSize: '1.1rem'}} name="arrow-back"></ion-icon>
+            Products
+          </Button>
         </Link>
       ) : (
         <>
-          <Box sx={{ display: { xs: "none", md: "block" }, width: '100%' }}>
+          <Box sx={{ display: { xs: "none", md: "block" }, width: "80%" }}>
             <Search />
           </Box>
           <Link to="/cart">

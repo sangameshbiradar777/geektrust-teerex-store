@@ -1,64 +1,68 @@
-import { ButtonGroup, Typography, Box,Stack, Button, TextField } from "@mui/material";
+import {
+  ButtonGroup,
+  Typography,
+  Box,
+  Stack,
+  Button,
+  OutlinedInput,
+} from "@mui/material";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import DeliveryType from "./DeliveryType";
+import CartValue from "./CartValue";
+import { useMemo } from "react";
 
 const CartSummary = () => {
   const { items } = useSelector((state) => state.cart);
+  const [deliveryType, setDeliveryType] = useState("free");
+  const [promocode, setPromocode] = useState("");
 
-  const getCartValue = () => {
+  const handleOnDeliveryTypeChange = (event) => {
+    setDeliveryType(event.target.name);
+  };
+
+  const cartItemsValue = useMemo(() => {
     return items.reduce((sum, item) => {
       return sum + item.price * item.cartQuantity;
     }, 0);
-  };
+  }, [items]);
 
   return (
-    <Box sx={{width: '100%'}}>
-      <Box sx={{ borderBottom: "2px dashed #ddd" }}>
-        <Typography>Delivery</Typography>
-        <ButtonGroup>
-          <Button>Free</Button>
-          <Button>Express</Button>
-          <Button>1 Day Delivery</Button>
-        </ButtonGroup>
-        <Typography>Deivery by 1 week from ordered date.</Typography>
-      </Box>
+    <Box sx={{ width: "100%", p: { xs: 2 }}} >
+      <Typography variant="h5" sx={{ paddingBottom: 1, marginBottom: 1, borderBottom: '1px solid #ccc' }}>
+        Delivery
+      </Typography>
+      <Stack spacing={2}>
+        <Box>
+          <DeliveryType
+            deliveryType={deliveryType}
+            handleOnDeliveryTypeChange={handleOnDeliveryTypeChange}
+          />
+        </Box>
 
-      <Box sx={{ borderBottom: "2px dashed #ddd" }}>
-        <TextField
-          variant="outlined"
-          label="Promocode"
-          placeholder="Promocode"
-        ></TextField>
-        <Typography>
-          Use code <code>geektrust</code> to get 20% discount.
-        </Typography>
-      </Box>
+        <Box className="dashed-border" />
 
-      <Box>
-        <Stack direction='row' justifyContent='space-between'>
-          <Typography>Subtotal</Typography>
-          <Typography>{getCartValue()}</Typography>
-        </Stack>
-        <Stack direction='row' justifyContent='space-between'>
-          <Typography>Discount</Typography>
-          <Typography>$0</Typography>
-        </Stack>
-        <Stack direction='row' justifyContent='space-between'>
-          <Typography>Delivery charges</Typography>
-          <Typography>$0</Typography>
-        </Stack>
-      </Box>
-
-      <Box>
-        <Stack direction='row' justifyContent='space-between'>
-          <Typography>Total</Typography>
-          <Typography>1000</Typography>
+        <Stack spacing={.3}>
+          <Stack direction="row" spacing={2}>
+            <OutlinedInput
+              value={promocode}
+              onChange={(e) => setPromocode(e.target.value)}
+              size="small"
+              placeholder="promocode"
+              sx={{width: '80%'}}
+            ></OutlinedInput>
+            <Button variant="outlined">Apply</Button>
+          </Stack>
+          <Typography variant="body2">
+            Use code <span style={{ fontWeight: 500 }}>TREXNEW</span> to get 20%
+            discount.
+          </Typography>
         </Stack>
 
-        <Stack>
-          <Button variant='contained'>Place Order</Button>
-          <Button variant="outlined">Back to Products</Button>
-        </Stack>
-      </Box>
+        <Box className="dashed-border" />
+
+        <CartValue deliveryType={deliveryType} promocode={promocode} cartItemsValue={cartItemsValue} />
+      </Stack>
     </Box>
   );
 };

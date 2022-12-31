@@ -1,16 +1,7 @@
 import {
   Card,
-  CardContent,
-  CardActions,
   CardMedia,
-  Typography,
   Box,
-  Stack,
-  Divider,
-  IconButton,
-  Icon,
-  Button,
-  Chip,
 } from "@mui/material";
 import {
   incrementQunatity,
@@ -24,7 +15,8 @@ import CartItemCardContent from "./CartItemCardContent";
 import CartItemCardActions from './CartItemCardActions'
 import CartItemErrorMessage from "./CartItemErrorMessage";
 
-const CartItem = ({ item, getTotalCartValue }) => {
+
+const CartItem = ({ item }) => {
   const dispatch = useDispatch();
   const { setItemToLocalStorage } = useLocalStorage();
 
@@ -59,14 +51,19 @@ const CartItem = ({ item, getTotalCartValue }) => {
 
 
   return (
-    <Card variant="outlined" elevation={0}>
+    <Card variant="outlined" elevation={0} sx={{display: 'flex', flexDirection: {xs: 'column', md: 'row'}}}>
       <CardMedia
         component="img"
         image={item.imageURL}
         alt={item.name}
-        sx={{ width: "30%", height: 200, padding: '1rem' }}
+        sx={{
+          width: { xs: "100%", md: "30%" },
+          height: 200,
+          objectFit: "contain",
+          borderBottom: { xs: "1px solid #ddd", md: 'none' },
+        }}
       />
-      <Box sx={{ flex: 1 }}>
+      <Box sx={{ flex: 1, width: {xs: "100%", md: 'auto'} }}>
         <CartItemCardContent item={item} />
         <CartItemCardActions
           item={item}
@@ -74,7 +71,10 @@ const CartItem = ({ item, getTotalCartValue }) => {
           handleOnIncrementQuantity={handleOnIncrementQuantity}
           handleOnDeleteItem={handleOnDeleteItem}
         />
-        <CartItemErrorMessage minQuantityErrorMessage={minQuantityErrorMessage} maxQuantityErrorMessage={maxQuantityErrorMessage} />
+        <CartItemErrorMessage
+          minQuantityErrorMessage={minQuantityErrorMessage}
+          maxQuantityErrorMessage={maxQuantityErrorMessage}
+        />
       </Box>
     </Card>
   );

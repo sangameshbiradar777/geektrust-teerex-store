@@ -14,8 +14,8 @@ const CartItems = () => {
   })
 
   return (
-    <Box>
-      <Typography variant="h3" component="h2">Cart</Typography>
+    <Box sx={{padding: {xs: 2, md: 2}, width: '100%'}}>
+      <Typography variant="h5" sx={{paddingBottom: 1, marginBottom: 1, borderBottom: '1px solid #ccc'}}>Shopping Cart</Typography>
       <Stack spacing={2}>
         {items.map(item => <CartItem key={item.id} item={item} />)}
       </Stack>
