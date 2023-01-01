@@ -28,6 +28,7 @@ const CartItem = ({ item }) => {
       setMaxQuantityErrorMessage(
         `You can order a maximum of ${item.cartQuantity} quantity for this item.`
       );
+      setMinQuantityErrorMessage('');
     } else {
       setMinQuantityErrorMessage("");
       dispatch(incrementQunatity(item.id));
@@ -39,6 +40,7 @@ const CartItem = ({ item }) => {
       setMinQuantityErrorMessage(
         "You should order minimum 1 quantity for this item"
       );
+      setMaxQuantityErrorMessage('');
     } else {
       setMaxQuantityErrorMessage("");
       dispatch(decrementQuantity(item.id));

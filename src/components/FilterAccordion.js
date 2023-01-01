@@ -39,11 +39,18 @@ const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange, render,
     <Accordion
       defaultExpanded={true}
       elevation={0}
+      sx={{ margin: "0 !important" }}
     >
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ion-icon style={{fontSize: '1.2rem'}} name="chevron-down-outline"></ion-icon>}
         aria-controls={filterCategory}
         id={filterCategory}
+        sx={{
+          "& MuiAccordionSummary-content": {
+            margin: 0,
+          },
+          minHeight: "0 !important",
+        }}
       >
         <Typography variant="subtitle1">{filterCategory}</Typography>
       </AccordionSummary>

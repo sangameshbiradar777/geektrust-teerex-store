@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography, Stack, Box } from "@mui/material";
 import { ENDPOINT } from "../../config/config";
 import axios from "axios";
 import { useEffect } from "react";
@@ -9,9 +9,13 @@ import {
   productsFetchFailure,
 } from "../../redux/slice/productsSlice";
 import ProductCard from "../../components/ProductCard";
+import Error from "../../components/Error";
+import NoProductsFound from "./NoProductsFound";
 
 const Products = () => {
-  const products = useSelector((state) => state.products.currentProducts);
+  const { currentProducts: products, isLoading } = useSelector(
+    (state) => state.products
+  );
   const dispatch = useDispatch();
 
   const fetchProducts = async () => {
@@ -36,7 +40,11 @@ const Products = () => {
 
   return (
     <Grid container spacing={2}>
-      {products.length ? productCards : null}
+      {products.length ? (
+        productCards
+      ) : !isLoading ? (
+        <NoProductsFound />
+      ) : null}
     </Grid>
   );
 };

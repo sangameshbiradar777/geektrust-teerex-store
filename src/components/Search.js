@@ -1,4 +1,4 @@
-import { Box, OutlinedInput } from "@mui/material";
+import { Box, InputAdornment, OutlinedInput } from "@mui/material";
 import { useEffect, useReducer, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentProducts } from "../redux/slice/productsSlice";
@@ -46,7 +46,7 @@ const Search = () => {
         genderFilters,
         typeFilters,
         priceFilters,
-        searchProducts,
+        searchText,
         allProducts
       );
       products = filteredProducts;
@@ -75,13 +75,18 @@ const Search = () => {
   }, [searchText]);
 
   return (
-    <Box component="form" sx={{flex: 1}}>
+    <Box component="form" sx={{ flex: 1 }}>
       <OutlinedInput
         size="small"
         placeholder="Search over 100+ products"
         value={searchText}
         onChange={handleOnSearchTextChange}
-        sx={{width: {xs: '95%', md: '80%'}, borderRadius: 2}}
+        startAdornment={
+          <InputAdornment>
+            <ion-icon style={{color: '#777', fontSize: '1.1rem', marginRight: '.5rem'}} name="search-outline"></ion-icon>
+          </InputAdornment>
+        }
+        sx={{ width: { xs: "95%", md: "80%" }, borderRadius: 2 }}
       />
     </Box>
   );

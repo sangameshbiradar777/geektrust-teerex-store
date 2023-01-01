@@ -32,12 +32,14 @@ const cartSlice = createSlice({
       })
     },
     decrementQuantity: (state, { payload }) => {
-      state.items = state.items.map(item => {
+      const updatedCartItems = state.items.map(item => {
         if (item.id === payload) {
           return { ...item, cartQuantity: item.cartQuantity - 1, quantity: item.quantity + 1 }
         }
         else return item;
       })
+
+      state.items = updatedCartItems.filter(item => item.cartQuantity);
     },
     deleteItem: (state, { payload }) => {
       state.items = state.items.filter(item => item.id !== payload);

@@ -29,6 +29,13 @@ const theme = createTheme({
           borderRadius: 6
         }
       }
+    },
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          minHeight: 0
+        }
+      }
     }
   },
   typography: {
@@ -43,8 +50,8 @@ const theme = createTheme({
       fontWeight: 500,
     },
     h5: {
-      fontSize: 22,
-      fontWeight: 400,
+      fontSize: 20,
+      fontWeight: 500,
       color: "#444",
     },
     h6: {

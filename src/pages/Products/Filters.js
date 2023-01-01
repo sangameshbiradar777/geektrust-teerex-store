@@ -56,7 +56,6 @@ const Filters = () => {
   useEffect(() => {
     if (!isUserFilteredProducts.current) return;
     debounce(() => {
-      console.log(priceFilters);
       const filteredProducts = filterProductsByCategory(
         colorFilters,
         genderFilters,

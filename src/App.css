@@ -1,5 +1,5 @@
 body {
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 * {
@@ -8,15 +8,18 @@ body {
   box-sizing: border-box;
 }
 
-
-.css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded {
-    height: max-content;
-  min-height: max-content !important;
+.MuiAccordionSummary-content.Mui-expanded {
+  margin: 0 !important;
 }
 
-.css-o4b71y-MuiAccordionSummary-content.Mui-expanded {
- margin: 0 !important;
+.MuiPaper-root-MuiAccordion-root.Mui-expanded {
+  margin: 0 !important;
 }
+
+.MuiAccordionDetails-root {
+  padding-top: 0 !important;
+}
+
 
 a {
   text-decoration: none;

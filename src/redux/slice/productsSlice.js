@@ -5,7 +5,7 @@ const productsSlice = createSlice({
   initialState: {
     allProducts: [],
     currentProducts: [],
-    isLoading: false,
+    isLoading: true,
     error: {}
   },
   reducers: {

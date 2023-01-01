@@ -11,7 +11,6 @@ const CartButton = () => {
         alignItems: "center",
         justifyContent: "center",
         gap: 1,
-        py: {md: 1}
       }}
       variant="outlined"
     >

@@ -1,6 +1,9 @@
 const useFilterProductsBySearch = () => {
   const filterProductsBySearch = (products, searchText) => {
     if (!searchText) return [];
+
+    searchText = searchText.toLowerCase();
+    
     const filteredProducts = products.filter((product) => {
       const color = product.color.toLowerCase();
       const name = product.name.toLowerCase();
