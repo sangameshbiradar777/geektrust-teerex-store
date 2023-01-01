@@ -26,17 +26,17 @@ const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: 6
-        }
-      }
+          borderRadius: 6,
+        },
+      },
     },
     MuiButtonBase: {
       styleOverrides: {
         root: {
-          minHeight: 0
-        }
-      }
-    }
+          minHeight: 0,
+        },
+      },
+    },
   },
   typography: {
     fontFamily: ["Inter Tight", "sans-serif"].join(","),
@@ -57,7 +57,7 @@ const theme = createTheme({
     h6: {
       fontSize: 16,
       fontWeight: 500,
-      color: '#444',
+      color: "#444",
     },
     subtitle1: {
       fontSize: 18,
@@ -79,20 +79,20 @@ const theme = createTheme({
     },
     caption: {
       fontSize: 19,
-      color: '#444'
-    }
+      color: "#444",
+    },
   },
   palette: {
     primary: {
       // main: "#2874F0",
-      main: '#5333ed',
+      main: "#5333ed",
       contrastText: "#E8E8E8",
     },
     secondary: {
       main: "#fff",
-      light: '#fff',
-      dark: '#fff',
-      contrastText: '#444'
+      light: "#fff",
+      dark: "#fff",
+      contrastText: "#444",
     },
     textDark1: {
       main: "#2A2A2A",

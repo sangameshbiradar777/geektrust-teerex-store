@@ -20,10 +20,7 @@ const ProductCard = ({ product }) => {
   const cartItem = items.find((item) => item.id === product.id);
 
   if (cartItem) product = cartItem;
-
-  console.log("product", product);
-  console.log("item", cartItem);
-
+  
   const handleOnAddToCart = () => {
     dispatch(addToCart(product));
   };

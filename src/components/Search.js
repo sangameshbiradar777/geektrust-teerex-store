@@ -32,7 +32,6 @@ const Search = () => {
       ? filteredProducts
       : allProducts;
 
-    console.log(currentProducts, "filtered---------");
     currentProducts = filterProductsBySearch(currentProducts, searchText);
     dispatch(updateSearchProducts(currentProducts));
   };
@@ -74,6 +73,12 @@ const Search = () => {
     debounceSearch(updateProducts, DEBOUNCE_TIME);
   }, [searchText]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(updateSearchText(''))
+    }
+  }, [])
+
   return (
     <Box component="form" sx={{ flex: 1 }}>
       <OutlinedInput
@@ -82,8 +87,11 @@ const Search = () => {
         value={searchText}
         onChange={handleOnSearchTextChange}
         startAdornment={
-          <InputAdornment>
-            <ion-icon style={{color: '#777', fontSize: '1.1rem', marginRight: '.5rem'}} name="search-outline"></ion-icon>
+          <InputAdornment position="start">
+            <ion-icon
+              style={{ color: "#777", fontSize: "1.1rem" }}
+              name="search-outline"
+            ></ion-icon>
           </InputAdornment>
         }
         sx={{ width: { xs: "95%", md: "80%" }, borderRadius: 2 }}

@@ -1,14 +1,22 @@
-import { Box, Button, Stack, Typography } from '@mui/material'
-import React from 'react'
-import { Link } from 'react-router-dom';
+import { Box, Button, Stack, Typography } from "@mui/material";
+import React from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { emptyCart } from "../../redux/slice/cartSlice";
 
-function CartValue({deliveryType, promocode, cartItemsValue}) {
+function CartValue({ deliveryType, promocode, cartItemsValue }) {
+  const dispatch = useDispatch();
+
+  const handleOnOrderPlace = () => {
+    dispatch(emptyCart());
+  }
+
   const getTotalCartValue = () => {
     let total = cartItemsValue;
-    if (deliveryType === 'express') total += 70;
-    if (promocode === 'TREXNEW') total -= cartItemsValue / 20;
+    if (deliveryType === "express") total += 70;
+    if (promocode === "TREXNEW") total -= cartItemsValue / 20;
     return total;
-  }
+  };
   return (
     <Stack spacing={1}>
       <Stack spacing={0.5}>
@@ -36,9 +44,13 @@ function CartValue({deliveryType, promocode, cartItemsValue}) {
 
       <Box>
         <Stack spacing={1}>
-          <Button variant="contained">Place Order</Button>
-          <Link to="/" style={{width: '100%'}}>
-            <Button fullWidth variant="outlined">Back to Products</Button>
+          <Link to="/thanks" style={{width: '100%'}}>
+            <Button fullWidth variant="contained" onClick={handleOnOrderPlace}>Place Order</Button>
+          </Link>
+          <Link to="/" style={{ width: "100%" }}>
+            <Button fullWidth variant="outlined">
+              Back to Products
+            </Button>
           </Link>
         </Stack>
       </Box>
@@ -46,4 +58,4 @@ function CartValue({deliveryType, promocode, cartItemsValue}) {
   );
 }
 
-export default CartValue
+export default CartValue;

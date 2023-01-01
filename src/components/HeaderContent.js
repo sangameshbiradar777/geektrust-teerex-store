@@ -20,7 +20,7 @@ const HeaderContent = ({isCartPage}) => {
         </Link>
       ) : (
         <>
-          <Box sx={{ display: { xs: "none", md: "block" }, width: "80%" }}>
+          <Box sx={{ display: { xs: "none", md: "block" }, flex: 1 }}>
             <Search />
           </Box>
           <Link to="/cart">

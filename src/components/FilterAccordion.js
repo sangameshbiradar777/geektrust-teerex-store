@@ -22,6 +22,7 @@ const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange, render,
               inputProps={{ "data-category": filterCategory }}
               onChange={handleOnFilterChange}
               name={filterItem[0]}
+              sx={{ "& .MuiSvgIcon-root": { fontSize: 21 } }}
             />
           }
           label={`${filterItem[0].charAt(0).toUpperCase()}${filterItem[0]

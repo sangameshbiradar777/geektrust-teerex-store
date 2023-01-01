@@ -34,7 +34,7 @@ const CartSummary = () => {
           backgroundColor: "#E8E8E8",
           borderRadius: 5,
           padding: {xs: 1, md: 2},
-          marginTop: {md: 5},
+          marginTop: {md: 4},
         }}
       >
         <Box
