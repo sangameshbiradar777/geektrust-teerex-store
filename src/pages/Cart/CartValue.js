@@ -1,14 +1,20 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { emptyCart } from "../../redux/slice/cartSlice";
+import { updateProductsQuantity } from "../../redux/slice/productsSlice";
+
 
 function CartValue({ deliveryType, promocode, cartItemsValue }) {
+  const cartItems = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
   const handleOnOrderPlace = () => {
     dispatch(emptyCart());
+    const cartItemsQuantity = cartItems.map(item => [item.id, item.cartQuantity]);
+    console.log(cartItemsQuantity);
+    dispatch(updateProductsQuantity(cartItemsQuantity));
   }
 
   const getTotalCartValue = () => {

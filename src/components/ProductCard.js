@@ -88,14 +88,12 @@ const ProductCard = ({ product }) => {
       </CardContent>
       <CardActions sx={{ px: 2, justifyContent: "space-between" }}>
         {product.quantity < 3 && product.quantity !== 0 && (
-          <Typography sx={{ color: "#E67375", fontWeight: 500 }}>
+          <Typography sx={{ color: "#FC7171", fontWeight: 500 }}>
             Hurry! Only {product.quantity} left
           </Typography>
         )}
         {product.quantity === 0 && (
-          <Typography sx={{ color: "#E67375", fontWeight: 500 }}>
-            Out of stock!
-          </Typography>
+          <Typography sx={{ color: "#FC7171", fontWeight: 500 }}>Out of stock!</Typography>
         )}
         <Box sx={{ marginLeft: "auto" }}>
           {product?.cartQuantity ? (

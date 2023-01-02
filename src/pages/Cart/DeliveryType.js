@@ -36,7 +36,7 @@ const DeliveryType = ({ deliveryType, handleOnDeliveryTypeChange }) => {
         variant="body2"
         sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
       >
-        Deivery by {deliveryType === "free" ? "1 week" : "1 - 2 days"} from
+        Delivery by {deliveryType === "free" ? "1 week" : "1 - 2 days"} from
         ordered date.
       </Typography>
     </Stack>

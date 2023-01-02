@@ -14,7 +14,6 @@ const useFilterProductsByCategory = () => {
     const selectedGenderFilters = getSelectedFilters(genderFilters);
     const selectedTypeFilters = getSelectedFilters(typeFilters);
 
-
     let products = allProducts.filter(product => 
       product.price >= priceFilters[0] && product.price <= priceFilters[1]
     );

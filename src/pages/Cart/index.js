@@ -1,5 +1,5 @@
 import Header from "../../components/Header";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import CartItems from "./CartItems";
 import CartSummary from "./CartSummary";
 import EmptyCart from "./EmptyCart";
@@ -13,6 +13,19 @@ const Cart = () => {
       <Header isCartPage />
       {items.length ? (
         <Grid container sx={{ maxWidth: "75rem", margin: "0 auto" }}>
+          <Grid item xs={12} sx={{textAlign: 'center'}}>
+            <Typography
+              sx={{
+                fontSize: 30,
+                fontWeight: 700,
+                color: "#555",
+                p: 2,
+                marginBottom: -2
+              }}
+            >
+              Shopping Cart
+            </Typography>
+          </Grid>
           <Grid item xs={12} md={8}>
             <CartItems items={items} />
           </Grid>

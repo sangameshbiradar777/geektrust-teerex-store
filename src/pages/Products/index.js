@@ -4,18 +4,16 @@ import Products from "./Products";
 import { Grid, IconButton, Stack } from "@mui/material";
 import Search from "../../components/Search";
 import { useState } from "react";
-import ResponsiveFilters from "./ResponsiveFilters";
+import FiltersDialog from "./FiltersDialog";
 import Loader from "../../components/Loader";
 import { useSelector } from "react-redux";
 
 const Home = () => {
   const isLoadingProducts = useSelector(state => state.products.isLoading);
-  const [isResponsiveFilterOpen, setIsResponsiveFilterOpen] = useState(false);
+  const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
 
-  console.log(isLoadingProducts)
-
-  const handleOnResponsiveFilterToggle = () => {
-    setIsResponsiveFilterOpen((state) => !state);
+  const toggleFiltersDialog = () => {
+    setIsFiltersDialogOpen((state) => !state);
   };
 
   return (
@@ -37,12 +35,12 @@ const Home = () => {
       <Grid width={"100%"} item p={{ xs: 1 }} px={{ xs: 1, sm: 2}} sx={{ display: { md: "none" } }}>
         <Stack direction="row" width="100%">
           <Search />
-          <IconButton onClick={handleOnResponsiveFilterToggle}>
+          <IconButton onClick={toggleFiltersDialog}>
             <ion-icon name="filter"></ion-icon>
           </IconButton>
-          <ResponsiveFilters
-            isResponsiveFilterOpen={isResponsiveFilterOpen}
-            handleOnResponsiveFilterToggle={handleOnResponsiveFilterToggle}
+          <FiltersDialog
+            isFiltersDialogOpen={isFiltersDialogOpen}
+            toggleFiltersDialog={toggleFiltersDialog}
           />
         </Stack>
       </Grid>

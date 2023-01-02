@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-function useDebounce(executableFunction, ms)  {
+function useDebounce()  {
   const timerId = useRef(null);
 
   const debounce = (executableFunction, ms) => {

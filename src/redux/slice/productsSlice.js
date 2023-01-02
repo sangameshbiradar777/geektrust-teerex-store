@@ -1,5 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const updateQuantity = (products, payload) => {
+  return products.map(product => {
+    const cartItem = payload.find(item => item[0] === product.id);
+    console.log(cartItem);
+    if (cartItem) {
+      return {...product, quantity: product.quantity - cartItem[1] };
+    }
+    return product;
+  })
+}
+
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
@@ -17,15 +28,19 @@ const productsSlice = createSlice({
       state.allProducts = action.payload;
       state.currentProducts = action.payload;
     },
-    prductsFetchFailure: (state, action) => {
+    productsFetchFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
     updateCurrentProducts: (state, action) => {
       state.currentProducts = action.payload;
     },
+    updateProductsQuantity: (state, action) => {
+      state.allProducts = updateQuantity(state.allProducts, action.payload);
+      state.currentProducts = updateQuantity(state.currentProducts, action.payload);
+    }
   }
 })
 
 export default productsSlice.reducer;
-export const { productsFetchStart, productsFetchSuccess, productsFetchFailure, updateCurrentProducts,  } = productsSlice.actions;
+export const { productsFetchStart, productsFetchSuccess, productsFetchFailure, updateCurrentProducts, updateProductsQuantity } = productsSlice.actions;

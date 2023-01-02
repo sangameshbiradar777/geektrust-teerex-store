@@ -9,7 +9,6 @@ import {
   deleteItem,
 } from "../../redux/slice/cartSlice";
 import { useDispatch } from "react-redux";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import { useState } from "react";
 import CartItemCardContent from "./CartItemCardContent";
 import CartItemCardActions from './CartItemCardActions'
@@ -18,7 +17,6 @@ import CartItemErrorMessage from "./CartItemErrorMessage";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
-  const { setItemToLocalStorage } = useLocalStorage();
 
   const [maxQuantityErrorMessage, setMaxQuantityErrorMessage] = useState("");
   const [minQuantityErrorMessage, setMinQuantityErrorMessage] = useState("");

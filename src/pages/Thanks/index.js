@@ -2,7 +2,9 @@ import { Stack, Typography, Button } from '@mui/material';
 import SuccessCheckmark from './successCheckmark';
 import { Link } from 'react-router-dom';
 
+
 function Thanks() {
+
   return (
     <Stack
       width="100%"

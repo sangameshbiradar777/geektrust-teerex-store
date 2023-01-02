@@ -9,7 +9,7 @@ body {
 }
 
 .MuiAccordionSummary-content.Mui-expanded {
-  margin: 0 !important;
+  margin: 5px 0 !important;
 }
 
 .MuiPaper-root-MuiAccordion-root.Mui-expanded {
@@ -18,6 +18,10 @@ body {
 
 .MuiAccordionDetails-root {
   padding-top: 0 !important;
+}
+
+.MuiPaper-root:before {
+  display: none;
 }
 
 a {
