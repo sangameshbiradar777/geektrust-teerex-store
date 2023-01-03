@@ -6,7 +6,7 @@ const Logo = () => {
     <Link to="/">
       <Box>
         <Typography color="primary" variant="h2" component="h1">
-          TeeRex
+          Store
         </Typography>
       </Box>
     </Link>

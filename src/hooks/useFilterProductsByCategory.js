@@ -1,7 +1,8 @@
-import useFilterProductsBySearch from './useFilterProductsBySearch';
+import store from '../redux/store';
 
 const useFilterProductsByCategory = () => {
-  const filterProductsBySearch = useFilterProductsBySearch();
+
+  const { colorFilters, genderFilters, typeFilters, priceFilters } = store.getState().filters;
 
   const getSelectedFilters = (filter) => {
     return Object.entries(filter)
@@ -9,18 +10,15 @@ const useFilterProductsByCategory = () => {
       .map((filter) => filter[0]);
   };
 
-  const filterProductsByCategory = (colorFilters, genderFilters, typeFilters, priceFilters, searchText, allProducts) => {
+  const filterProductsByCategory = (products) => {
     const selectedColorFilters = getSelectedFilters(colorFilters);
     const selectedGenderFilters = getSelectedFilters(genderFilters);
     const selectedTypeFilters = getSelectedFilters(typeFilters);
 
-    let products = allProducts.filter(product => 
-      product.price >= priceFilters[0] && product.price <= priceFilters[1]
+    products = products.filter(
+      (product) =>
+        product.price >= priceFilters[0] && product.price <= priceFilters[1]
     );
-
-    if (searchText) {
-      products = filterProductsBySearch(products, searchText);
-    }
 
     if (selectedGenderFilters.length) {
       products = products.filter((product) =>
@@ -39,7 +37,7 @@ const useFilterProductsByCategory = () => {
     }
 
     return products;
-  }
+  };
 
   return filterProductsByCategory;
 }

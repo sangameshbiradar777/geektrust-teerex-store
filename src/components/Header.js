@@ -1,8 +1,10 @@
 import { Grid, Box } from "@mui/material";
 import Logo from "./Logo";
 import HeaderContent from "./HeaderContent";
+import React from 'react';
 
 const Header = ({ isCartPage }) => {
+  console.count('header render');
   return (
     <>
       <Grid
@@ -15,9 +17,7 @@ const Header = ({ isCartPage }) => {
           borderRight: {
             md: isCartPage ? "none" : "1px solid #D9D9D9",
           },
-          borderBottom: {
-            md: "1px solid #D9D9D9",
-          },
+          borderBottom: "1px solid #D9D9D9",
           height: {
             md: 70,
           },
@@ -31,7 +31,7 @@ const Header = ({ isCartPage }) => {
         md={9.5}
         px={{ xs: 1, sm: 2, md: 3 }}
         py={1.5}
-        sx={{ borderBottom: { md: "1px solid #D9D9D9" }, height: { md: 70 } }}
+        sx={{ borderBottom: "1px solid #D9D9D9" , height: { md: 70 } }}
       >
         <HeaderContent isCartPage={isCartPage} />
       </Grid>
@@ -39,4 +39,4 @@ const Header = ({ isCartPage }) => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

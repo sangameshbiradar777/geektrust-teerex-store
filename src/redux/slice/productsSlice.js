@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const updateQuantity = (products, payload) => {
   return products.map(product => {
     const cartItem = payload.find(item => item[0] === product.id);
-    console.log(cartItem);
     if (cartItem) {
       return {...product, quantity: product.quantity - cartItem[1] };
     }

@@ -9,28 +9,22 @@ const unCheckFilters = (filters) => {
 const filtersSlice = createSlice({
   name: "filters",
   initialState: {
-    searchText: "",
     colorFilters: [],
     genderFilters: [],
     typeFilters: [],
     priceFilters: [],
-    filteredProducts: [],
-    searchProducts: [],
   },
   reducers: {
+    initializeFilters: (state, action) => {
+      state.colorFilters = action.payload.colorFilters;
+      state.genderFilters = action.payload.genderFilters;
+      state.priceFilters = action.payload.priceFilters;
+      state.typeFilters = action.payload.typeFilters;
+    },
     updateFilters: (state, action) => {
       state[action.payload.name] = action.payload.filters;
     },
-    updateFilteredProducts: (state, action) => {
-      state.filteredProducts = action.payload;
-    },
-    updateSearchProducts: (state, action) => {
-      state.searchProducts = action.payload;
-    },
-    updateSearchText: (state, action) => {
-      state.searchText = action.payload;
-    },
-    removeFilters: (state, action) => {
+    clearFilters: (state, action) => {
       state.colorFilters = unCheckFilters(state.colorFilters);
       state.genderFilters = unCheckFilters(state.genderFilters);
       state.typeFilters = unCheckFilters(state.typeFilters);
@@ -41,9 +35,7 @@ const filtersSlice = createSlice({
 
 export default filtersSlice.reducer;
 export const {
+  initializeFilters,
   updateFilters,
-  updateFilteredProducts,
-  updateSearchProducts,
-  updateSearchText,
-  removeFilters,
+  clearFilters,
 } = filtersSlice.actions;

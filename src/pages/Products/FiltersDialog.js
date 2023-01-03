@@ -12,7 +12,7 @@ import {
 import React from 'react';
 import Filters from "./Filters";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFilters } from "../../redux/slice/filtersSlice";
+import { clearFilters } from "../../redux/slice/filtersSlice";
 import getMinAndMaxPrice from "../../utils/getMinAndMaxPrice";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -20,13 +20,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const FiltersDialog = ({ isFiltersDialogOpen, toggleFiltersDialog }) => {
+  console.log('filter dialog');
   const products = useSelector(state => state.products.allProducts);
 
   const dispatch = useDispatch();
   const minAndMaxPrice = getMinAndMaxPrice(products);
 
   const handleOnCancelFilters = () => {
-    dispatch(removeFilters(minAndMaxPrice));
+    dispatch(clearFilters(minAndMaxPrice));
     toggleFiltersDialog();
   }
 

@@ -1,83 +1,37 @@
 import { Box, InputAdornment, OutlinedInput } from "@mui/material";
-import { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { updateSearchText } from "../redux/slice/searchSlice";
+import useFilterProducts from '../hooks/useFilterProducts';
+import useDebounce from '../hooks/useDebounce';
+import { DEBOUNCE_TIME } from "../config/config";
 import { updateCurrentProducts } from "../redux/slice/productsSlice";
-import {
-  updateSearchProducts,
-  updateSearchText,
-} from "../redux/slice/filtersSlice";
-import useFilterProductsBySearch from "../hooks/useFilterProductsBySearch";
-import useFilterProductsByCategory from "../hooks/useFilterProductsByCategory";
 
 const Search = () => {
-  const DEBOUNCE_TIME = 400; // IN MILLI_SECONDS
-  const {
-    searchProducts,
-    filteredProducts,
-    colorFilters,
-    genderFilters,
-    typeFilters,
-    priceFilters,
-    searchText,
-  } = useSelector((state) => state.filters);
-  const timerId = useRef(null);
-  const { allProducts } = useSelector((state) => state.products);
+  const  {searchText}  = useSelector((state) => state.search);
   const dispatch = useDispatch();
-  const filterProductsBySearch = useFilterProductsBySearch();
-  const filterProductsByCategory = useFilterProductsByCategory();
-  const isUserSearched = useRef(false);
-
-  const updateProducts = () => {
-    let currentProducts = filteredProducts.length
-      ? filteredProducts
-      : allProducts;
-
-    currentProducts = filterProductsBySearch(currentProducts, searchText);
-    dispatch(updateSearchProducts(currentProducts));
-  };
-
-  useEffect(() => {
-    if (!isUserSearched.current) return;
-    let products = searchProducts;
-    if (!searchText) {
-      const filteredProducts = filterProductsByCategory(
-        colorFilters,
-        genderFilters,
-        typeFilters,
-        priceFilters,
-        searchText,
-        allProducts
-      );
-      products = filteredProducts;
-    }
-    dispatch(updateCurrentProducts(products));
-  }, [searchProducts]);
+  const filterProducts = useFilterProducts();
+  const debounce = useDebounce();
+  const isUserSearched = useRef();
 
   const handleOnSearchTextChange = (event) => {
     dispatch(updateSearchText(event.target.value));
     isUserSearched.current = true;
   };
 
-  const debounceSearch = (executableFunction, ms) => {
-    if (timerId.current) clearTimeout(timerId.current);
-
-    const newTimerId = setTimeout(() => {
-      executableFunction();
-    }, ms);
-
-    timerId.current = newTimerId;
-  };
-
   useEffect(() => {
     if (!isUserSearched.current) return;
-    debounceSearch(updateProducts, DEBOUNCE_TIME);
-  }, [searchText]);
+    debounce(() => {
+      const filteredProducts = filterProducts();
+      dispatch(updateCurrentProducts(filteredProducts));
+    }, DEBOUNCE_TIME);
+  }, [searchText])
 
   useEffect(() => {
     return () => {
-      dispatch(updateSearchText(''))
-    }
-  }, [])
+      dispatch(updateSearchText(""));
+    };
+  }, []);
 
   return (
     <Box component="form" sx={{ flex: 1 }}>

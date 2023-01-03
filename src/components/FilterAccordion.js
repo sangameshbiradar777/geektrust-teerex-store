@@ -9,11 +9,20 @@ import {
   Checkbox,
   Stack,
   TextField,
-  InputAdornment
+  InputAdornment,
 } from "@mui/material";
+import React from "react";
+import { useDispatch } from "react-redux";
 
-const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange, render, isRangeSlider }) => {
-  
+const FilterAccordion = ({
+  filter,
+  filterCategory,
+  handleOnFilterChange,
+  render,
+  isRangeSlider,
+}) => {
+  const dispatch = useDispatch();
+  console.log("filter accordion");
   const getFilterItems = () => {
     const filterItems = Object.entries(filter).map((filterItem, index) => {
       return (
@@ -22,22 +31,17 @@ const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange, render,
           control={
             <Checkbox
               checked={filterItem[1]}
-              inputProps={{ "data-category": filterCategory }}
-              onChange={handleOnFilterChange}
+              onChange={(e) => handleOnFilterChange(e, filter, filterCategory, dispatch)}
               name={filterItem[0]}
               sx={{ "& .MuiSvgIcon-root": { fontSize: 21 } }}
             />
           }
-          label={`${filterItem[0].charAt(0).toUpperCase()}${filterItem[0]
-            .split("")
-            .slice(1)
-            .join("")}`}
+          label={filterItem[0]}
         />
       );
     });
     return filterItems;
-  }
-  
+  };
 
   return (
     <Accordion
@@ -74,12 +78,12 @@ const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange, render,
         <FormGroup>{isRangeSlider ? render() : getFilterItems()}</FormGroup>
       </AccordionDetails>
       {isRangeSlider && (
-        <AccordionActions sx={{justifyContent: 'center'}}>
+        <AccordionActions sx={{ justifyContent: "center" }}>
           <Stack direction="row" spacing={2} px={1}>
             <TextField
               value={filter[0] || 0}
               onChange={(e) =>
-                handleOnFilterChange('', [parseInt(e.target.value), filter[1]])
+                handleOnFilterChange("", [parseInt(e.target.value), filter[1]])
               }
               label="Min"
               size="small"
@@ -93,7 +97,7 @@ const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange, render,
             <TextField
               value={filter[1] || 0}
               onChange={(e) =>
-                handleOnFilterChange('', [filter[0], parseInt(e.target.value)])
+                handleOnFilterChange("", [filter[0], parseInt(e.target.value)])
               }
               label="Max"
               size="small"
@@ -110,5 +114,4 @@ const FilterAccordion = ({ filter, filterCategory, handleOnFilterChange, render,
     </Accordion>
   );
 };
-
-export default FilterAccordion;
+export default React.memo(FilterAccordion);
