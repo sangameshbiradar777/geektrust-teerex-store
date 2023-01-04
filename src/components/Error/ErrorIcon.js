@@ -1,4 +1,4 @@
-import { Stack, Box } from "@mui/system";
+import { Stack } from "@mui/system";
 
 function ErrorIcon({ icon }) {
   return (

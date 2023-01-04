@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentProducts } from "../../redux/slice/productsSlice";
 import handleOnFilterChange from "../../utils/handleOnFilterChange";
-import useFilterProducts from '../../hooks/useFilterProducts'
+import useFilterProducts from "../../hooks/useFilterProducts";
 import React, { useEffect } from "react";
-import FilterAccordion from '../../components/FilterAccordion';
+import FilterAccordion from "../../components/FilterAccordion";
 
 const ColorFilters = () => {
   const { colorFilters } = useSelector((state) => state.filters);
@@ -11,7 +11,6 @@ const ColorFilters = () => {
   const dispatch = useDispatch();
 
   console.log("color filters");
-
 
   const updateCurrentProductsOnFilterChange = () => {
     const filteredProducts = filterProducts();

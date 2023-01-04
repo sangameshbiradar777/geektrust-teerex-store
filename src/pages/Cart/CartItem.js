@@ -1,8 +1,4 @@
-import {
-  Card,
-  CardMedia,
-  Box,
-} from "@mui/material";
+import { Card, CardMedia, Box } from "@mui/material";
 import {
   incrementQunatity,
   decrementQuantity,
@@ -11,9 +7,8 @@ import {
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import CartItemCardContent from "./CartItemCardContent";
-import CartItemCardActions from './CartItemCardActions'
+import CartItemCardActions from "./CartItemCardActions";
 import CartItemErrorMessage from "./CartItemErrorMessage";
-
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -26,7 +21,7 @@ const CartItem = ({ item }) => {
       setMaxQuantityErrorMessage(
         `You can order a maximum of ${item.cartQuantity} quantity for this item.`
       );
-      setMinQuantityErrorMessage('');
+      setMinQuantityErrorMessage("");
     } else {
       setMinQuantityErrorMessage("");
       dispatch(incrementQunatity(item.id));
@@ -38,7 +33,7 @@ const CartItem = ({ item }) => {
       setMinQuantityErrorMessage(
         "You should order minimum 1 quantity for this item"
       );
-      setMaxQuantityErrorMessage('');
+      setMaxQuantityErrorMessage("");
     } else {
       setMaxQuantityErrorMessage("");
       dispatch(decrementQuantity(item.id));
@@ -49,9 +44,12 @@ const CartItem = ({ item }) => {
     dispatch(deleteItem(item.id));
   };
 
-
   return (
-    <Card variant="outlined" elevation={0} sx={{display: 'flex', flexDirection: {xs: 'column', md: 'row'}}}>
+    <Card
+      variant="outlined"
+      elevation={0}
+      sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
+    >
       <CardMedia
         component="img"
         image={item.imageURL}
@@ -60,10 +58,10 @@ const CartItem = ({ item }) => {
           width: { xs: "100%", md: "30%" },
           height: 200,
           objectFit: "contain",
-          borderBottom: { xs: "1px solid #ddd", md: 'none' },
+          borderBottom: { xs: "1px solid #ddd", md: "none" },
         }}
       />
-      <Box sx={{ flex: 1, width: {xs: "100%", md: 'auto'} }}>
+      <Box sx={{ flex: 1, width: { xs: "100%", md: "auto" } }}>
         <CartItemCardContent item={item} />
         <CartItemCardActions
           item={item}

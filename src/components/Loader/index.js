@@ -10,7 +10,10 @@ function Loader() {
         width: "100%",
       }}
     >
-      <LinearProgress sx={{ backgroundColor: "transparent", height: '2px' }} color="primary" />
+      <LinearProgress
+        sx={{ backgroundColor: "transparent", height: "2px" }}
+        color="primary"
+      />
     </Box>
   );
 }

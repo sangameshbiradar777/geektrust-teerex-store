@@ -1,6 +1,6 @@
 import Error from "../../components/Error";
-import { Box, Stack, Badge, Typography, Button } from "@mui/material";
-import ErrorIcon from "../../components/ErrorIcon";
+import { Stack, Typography, Button } from "@mui/material";
+import ErrorIcon from "../../components/Error/ErrorIcon";
 import { Link } from "react-router-dom";
 
 function EmptyCart() {

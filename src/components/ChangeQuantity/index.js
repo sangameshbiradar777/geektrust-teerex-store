@@ -1,6 +1,10 @@
 import { IconButton, Stack, Typography } from "@mui/material";
 
-function ChangeQuantity({item, handleOnDecrementQuantity, handleOnIncrementQuantity}) {
+const ChangeQuantity = ({
+  item,
+  handleOnDecrementQuantity,
+  handleOnIncrementQuantity,
+}) => {
   return (
     <Stack
       direction="row"
@@ -23,6 +27,6 @@ function ChangeQuantity({item, handleOnDecrementQuantity, handleOnIncrementQuant
       </IconButton>
     </Stack>
   );
-}
+};
 
 export default ChangeQuantity;

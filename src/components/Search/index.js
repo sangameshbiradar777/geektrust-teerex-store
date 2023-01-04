@@ -1,14 +1,14 @@
 import { Box, InputAdornment, OutlinedInput } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateSearchText } from "../redux/slice/searchSlice";
-import useFilterProducts from '../hooks/useFilterProducts';
-import useDebounce from '../hooks/useDebounce';
-import { DEBOUNCE_TIME } from "../config/config";
-import { updateCurrentProducts } from "../redux/slice/productsSlice";
+import { updateSearchText } from "../../redux/slice/searchSlice";
+import useFilterProducts from "../../hooks/useFilterProducts";
+import useDebounce from "../../hooks/useDebounce";
+import { DEBOUNCE_TIME } from "../../config/config";
+import { updateCurrentProducts } from "../../redux/slice/productsSlice";
 
 const Search = () => {
-  const  {searchText}  = useSelector((state) => state.search);
+  const { searchText } = useSelector((state) => state.search);
   const dispatch = useDispatch();
   const filterProducts = useFilterProducts();
   const debounce = useDebounce();
@@ -25,7 +25,7 @@ const Search = () => {
       const filteredProducts = filterProducts();
       dispatch(updateCurrentProducts(filteredProducts));
     }, DEBOUNCE_TIME);
-  }, [searchText])
+  }, [searchText]);
 
   useEffect(() => {
     return () => {

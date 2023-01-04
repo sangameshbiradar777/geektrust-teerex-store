@@ -1,14 +1,14 @@
-import store from '../redux/store';
+import store from "../redux/store";
 
 const useFilterProductsBySearch = () => {
   let { searchText } = store.getState().search;
   const { allProducts } = store.getState().products;
-  
+
   const filterProductsBySearch = () => {
     if (!searchText) return allProducts;
 
     searchText = searchText.toLowerCase();
-    
+
     const filteredProducts = allProducts.filter((product) => {
       const color = product.color.toLowerCase();
       const name = product.name.toLowerCase();
@@ -27,9 +27,9 @@ const useFilterProductsBySearch = () => {
     });
 
     return filteredProducts;
-  }
+  };
 
   return filterProductsBySearch;
-}
+};
 
 export default useFilterProductsBySearch;

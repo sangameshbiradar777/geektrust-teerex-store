@@ -1,8 +1,8 @@
-import store from '../redux/store';
+import store from "../redux/store";
 
 const useFilterProductsByCategory = () => {
-
-  const { colorFilters, genderFilters, typeFilters, priceFilters } = store.getState().filters;
+  const { colorFilters, genderFilters, typeFilters, priceFilters } =
+    store.getState().filters;
 
   const getSelectedFilters = (filter) => {
     return Object.entries(filter)
@@ -40,6 +40,6 @@ const useFilterProductsByCategory = () => {
   };
 
   return filterProductsByCategory;
-}
+};
 
 export default useFilterProductsByCategory;

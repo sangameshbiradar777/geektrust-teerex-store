@@ -11,7 +11,7 @@ import {
 import ProductCard from "../../components/ProductCard";
 import NoProductsFound from "./NoProductsFound";
 import Error from "../../components/Error";
-import ErrorIcon from "../../components/ErrorIcon";
+import ErrorIcon from "../../components/Error/ErrorIcon";
 
 const Products = () => {
   const {

@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import './index.css';
+import "./index.css";
 
 function SuccessCheckmark() {
   return (
@@ -23,10 +23,9 @@ function SuccessCheckmark() {
           fill="none"
           d="M14.1 27.2l7.1 7.2 16.7-16.8"
         />
-        
       </svg>
     </Box>
   );
 }
 
-export default SuccessCheckmark
+export default SuccessCheckmark;

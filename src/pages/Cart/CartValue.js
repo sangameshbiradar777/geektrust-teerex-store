@@ -5,17 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { emptyCart } from "../../redux/slice/cartSlice";
 import { updateProductsQuantity } from "../../redux/slice/productsSlice";
 
-
 function CartValue({ deliveryType, promocode, cartItemsValue }) {
-  const cartItems = useSelector(state => state.cart.items);
+  const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
   const handleOnOrderPlace = () => {
     dispatch(emptyCart());
-    const cartItemsQuantity = cartItems.map(item => [item.id, item.cartQuantity]);
+    const cartItemsQuantity = cartItems.map((item) => [
+      item.id,
+      item.cartQuantity,
+    ]);
     console.log(cartItemsQuantity);
     dispatch(updateProductsQuantity(cartItemsQuantity));
-  }
+  };
 
   const getTotalCartValue = () => {
     let total = cartItemsValue;
@@ -50,8 +52,10 @@ function CartValue({ deliveryType, promocode, cartItemsValue }) {
 
       <Box>
         <Stack spacing={1}>
-          <Link to="/thanks" style={{width: '100%'}}>
-            <Button fullWidth variant="contained" onClick={handleOnOrderPlace}>Place Order</Button>
+          <Link to="/thanks" style={{ width: "100%" }}>
+            <Button fullWidth variant="contained" onClick={handleOnOrderPlace}>
+              Place Order
+            </Button>
           </Link>
           <Link to="/" style={{ width: "100%" }}>
             <Button fullWidth variant="outlined">

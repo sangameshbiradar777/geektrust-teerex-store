@@ -26,15 +26,7 @@ const Filters = ({ isDialog }) => {
     return filtersObject;
   };
 
-  const handleOnClearFilters = () => {
-    dispatch(clearFilters([minPrice, maxPrice]));
-  };
-
-  console.count("filter component");
-
-  useEffect(() => {
-    if (!allProducts.length) return;
-    console.count("init filters");
+  const initFilters = () => {
     const availabeColorFilters = getAvailableFilters(allProducts, "color");
     const availabeGenderFilters = getAvailableFilters(allProducts, "gender");
     const availabeTypeFilters = getAvailableFilters(allProducts, "type");
@@ -46,6 +38,17 @@ const Filters = ({ isDialog }) => {
         typeFilters: availabeTypeFilters,
       })
     );
+  };
+
+  const handleOnClearFilters = () => {
+    dispatch(clearFilters([minPrice, maxPrice]));
+  };
+
+  console.count("filter component");
+
+  useEffect(() => {
+    if (!allProducts.length) return;
+    initFilters();
   }, [allProducts]);
 
   useEffect(() => {

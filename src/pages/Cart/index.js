@@ -13,14 +13,16 @@ const Cart = () => {
       <Header isCartPage />
       {items.length ? (
         <Grid container sx={{ maxWidth: "75rem", margin: "0 auto" }}>
-          <Grid item xs={12} sx={{ borderBottom: "1px solid #ccc"  }}>
+          <Grid item xs={12}>
             <Typography
               sx={{
-                fontSize: 26,
+                fontSize: 22,
                 fontWeight: 600,
-                color: "#555",
-                p: 2,
-                marginBottom: -2,
+                color: "#444",
+                px: 2,
+                paddingTop: 2,
+                paddingBottom: 1,
+                borderBottom: '1px solid #ddd'
               }}
             >
               Shopping Cart
@@ -30,7 +32,7 @@ const Cart = () => {
             item
             xs={12}
             md={8}
-            sx={{ borderRight: { md: "1px solid #ccc" } }}
+            sx={{ borderRight: { md: "1px solid #ddd" } }}
           >
             <CartItems items={items} />
           </Grid>

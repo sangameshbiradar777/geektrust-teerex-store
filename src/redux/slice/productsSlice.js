@@ -1,22 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const updateQuantity = (products, payload) => {
-  return products.map(product => {
-    const cartItem = payload.find(item => item[0] === product.id);
+  return products.map((product) => {
+    const cartItem = payload.find((item) => item[0] === product.id);
     if (cartItem) {
-      return {...product, quantity: product.quantity - cartItem[1] };
+      return { ...product, quantity: product.quantity - cartItem[1] };
     }
     return product;
-  })
-}
+  });
+};
 
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState: {
     allProducts: [],
     currentProducts: [],
     isLoading: true,
-    error: {}
+    error: {},
   },
   reducers: {
     productsFetchStart: (state) => {
@@ -36,10 +36,19 @@ const productsSlice = createSlice({
     },
     updateProductsQuantity: (state, action) => {
       state.allProducts = updateQuantity(state.allProducts, action.payload);
-      state.currentProducts = updateQuantity(state.currentProducts, action.payload);
-    }
-  }
-})
+      state.currentProducts = updateQuantity(
+        state.currentProducts,
+        action.payload
+      );
+    },
+  },
+});
 
 export default productsSlice.reducer;
-export const { productsFetchStart, productsFetchSuccess, productsFetchFailure, updateCurrentProducts, updateProductsQuantity } = productsSlice.actions;
+export const {
+  productsFetchStart,
+  productsFetchSuccess,
+  productsFetchFailure,
+  updateCurrentProducts,
+  updateProductsQuantity,
+} = productsSlice.actions;

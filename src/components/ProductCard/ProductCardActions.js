@@ -1,7 +1,11 @@
 import { Box, Button, CardActions, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { incrementQunatity, decrementQuantity, addToCart } from "../redux/slice/cartSlice";
-import ChangeQuantity from "./ChangeQuantity";
+import {
+  incrementQunatity,
+  decrementQuantity,
+  addToCart,
+} from "../../redux/slice/cartSlice";
+import ChangeQuantity from "../ChangeQuantity";
 
 const ProductCardActions = ({ product }) => {
   const FEWER_PRODUCTS = 3;

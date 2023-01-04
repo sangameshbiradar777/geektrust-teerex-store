@@ -1,10 +1,10 @@
-import Search from "./Search";
+import Search from "../Search";
 import { Stack } from "@mui/system";
-import CartButton from "./CartButton";
+import CartButton from "../CartButton";
 import { Link } from "react-router-dom";
 import { Box, Button } from "@mui/material";
 
-const HeaderContent = ({isCartPage}) => {
+const HeaderContent = ({ isCartPage }) => {
   return (
     <Stack
       direction="row"
@@ -12,9 +12,15 @@ const HeaderContent = ({isCartPage}) => {
       alignItems="center"
     >
       {isCartPage ? (
-        <Link to="/" style={{marginLeft: 'auto'}}>
-          <Button variant="outlined" sx={{display: 'flex', alignItems: 'center', gap: 1}}>
-            <ion-icon style={{fontSize: '1.1rem'}} name="arrow-back"></ion-icon>
+        <Link to="/" style={{ marginLeft: "auto" }}>
+          <Button
+            variant="outlined"
+            sx={{ display: "flex", alignItems: "center", gap: 1 }}
+          >
+            <ion-icon
+              style={{ fontSize: "1.1rem" }}
+              name="arrow-back"
+            ></ion-icon>
             Products
           </Button>
         </Link>

@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import Error from "../../components/Error"
-import ErrorIcon from "../../components/ErrorIcon";
+import ErrorIcon from "../../components/Error/ErrorIcon";
 
 function NoProductsFound() {
   return (

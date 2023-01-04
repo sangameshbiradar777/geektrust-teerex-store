@@ -6,10 +6,10 @@ import {
   Slide,
   Typography,
   IconButton,
-  Button, 
-  Stack
+  Button,
+  Stack,
 } from "@mui/material";
-import React from 'react';
+import React from "react";
 import Filters from "./Filters";
 import { useDispatch, useSelector } from "react-redux";
 import { clearFilters } from "../../redux/slice/filtersSlice";
@@ -20,8 +20,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const FiltersDialog = ({ isFiltersDialogOpen, toggleFiltersDialog }) => {
-  console.log('filter dialog');
-  const products = useSelector(state => state.products.allProducts);
+  console.log("filter dialog");
+  const products = useSelector((state) => state.products.allProducts);
 
   const dispatch = useDispatch();
   const minAndMaxPrice = getMinAndMaxPrice(products);
@@ -29,7 +29,7 @@ const FiltersDialog = ({ isFiltersDialogOpen, toggleFiltersDialog }) => {
   const handleOnCancelFilters = () => {
     dispatch(clearFilters(minAndMaxPrice));
     toggleFiltersDialog();
-  }
+  };
 
   return (
     <Dialog
@@ -38,17 +38,23 @@ const FiltersDialog = ({ isFiltersDialogOpen, toggleFiltersDialog }) => {
       TransitionComponent={Transition}
       keepMounted
     >
-      <DialogTitle sx={{ borderBottom: "1px solid #ddd", marginBottom: 1, py: 1, px: 2 }}>
-        <Stack direction='row' justifyContent='space-between' alignItems='center'>
+      <DialogTitle
+        sx={{ borderBottom: "1px solid #ddd", marginBottom: 1, py: 1, px: 2 }}
+      >
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Typography
             sx={{ fontSize: "1.2rem", fontWeight: 500, color: "#333" }}
           >
             Filters
           </Typography>
-        <IconButton onClick={handleOnCancelFilters}>
-          <ion-icon name="close-outline"></ion-icon>
-        </IconButton>
-        </Stack> 
+          <IconButton onClick={handleOnCancelFilters}>
+            <ion-icon name="close-outline"></ion-icon>
+          </IconButton>
+        </Stack>
       </DialogTitle>
       <DialogContent sx={{ width: "100%", px: 3, py: 1 }}>
         <Filters isDialog />
@@ -63,6 +69,6 @@ const FiltersDialog = ({ isFiltersDialogOpen, toggleFiltersDialog }) => {
       </DialogActions>
     </Dialog>
   );
-}
+};
 
 export default FiltersDialog;

@@ -1,4 +1,4 @@
-import { Button, Typography, Badge } from "@mui/material";
+import { Button, Badge } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const CartButton = () => {

@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentProducts } from "../../redux/slice/productsSlice";
-import getAvailableFilters from "../../utils/getAvailableFilters";
 import handleOnFilterChange from "../../utils/handleOnFilterChange";
 import useFilterProducts from "../../hooks/useFilterProducts";
 import React, { useEffect } from "react";

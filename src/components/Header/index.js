@@ -1,15 +1,15 @@
-import { Grid, Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import Logo from "./Logo";
 import HeaderContent from "./HeaderContent";
-import React from 'react';
+import React from "react";
 
 const Header = ({ isCartPage }) => {
-  console.count('header render');
+  console.count("header render");
   return (
     <>
       <Grid
         item
-        px={{xs: 1, sm: 2, md: 3}}
+        px={{ xs: 1, sm: 2, md: 3 }}
         py={1.5}
         xs={4}
         md={2.5}
@@ -31,7 +31,7 @@ const Header = ({ isCartPage }) => {
         md={9.5}
         px={{ xs: 1, sm: 2, md: 3 }}
         py={1.5}
-        sx={{ borderBottom: "1px solid #D9D9D9" , height: { md: 70 } }}
+        sx={{ borderBottom: "1px solid #D9D9D9", height: { md: 70 } }}
       >
         <HeaderContent isCartPage={isCartPage} />
       </Grid>
