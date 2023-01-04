@@ -1,13 +1,11 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   initializeFilters,
   clearFilters,
 } from "../../redux/slice/filtersSlice";
-
 import getMinAndMaxPrice from "../../utils/getMinAndMaxPrice";
 import { Stack } from "@mui/material";
-
 import ColorFilters from "./ColorFilters";
 import GenderFilters from "./GenderFilters";
 import PriceFilters from "./PriceFilters";
@@ -36,6 +34,7 @@ const Filters = ({ isDialog }) => {
 
   useEffect(() => {
     if (!allProducts.length) return;
+    console.count("init filters");
     const availabeColorFilters = getAvailableFilters(allProducts, "color");
     const availabeGenderFilters = getAvailableFilters(allProducts, "gender");
     const availabeTypeFilters = getAvailableFilters(allProducts, "type");
@@ -57,15 +56,19 @@ const Filters = ({ isDialog }) => {
 
   return (
     <Stack>
-      {!isDialog && <FiltersHeader handleOnClearFilters={handleOnClearFilters} />}
-      <Stack gap={2}>
-        <ColorFilters />
-        <GenderFilters />
-        <PriceFilters />
-        <TypeFilters />
-      </Stack>
+      {!isDialog && (
+        <FiltersHeader handleOnClearFilters={handleOnClearFilters} />
+      )}
+      {!!allProducts.length && (
+        <Stack gap={2}>
+          <ColorFilters />
+          <GenderFilters />
+          <PriceFilters />
+          <TypeFilters />
+        </Stack>
+      )}
     </Stack>
   );
 };
 
-export default Filters;
+export default React.memo(Filters);
