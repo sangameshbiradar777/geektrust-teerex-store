@@ -1,4 +1,4 @@
-import { Box, InputAdornment, OutlinedInput } from "@mui/material";
+import { Box, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateSearchText } from "../../redux/slice/searchSlice";
@@ -17,6 +17,10 @@ const Search = () => {
   const handleOnSearchTextChange = (event) => {
     dispatch(updateSearchText(event.target.value));
     isUserSearched.current = true;
+  };
+
+  const handleOnClearSearchText = () => {
+    dispatch(updateSearchText(""));
   };
 
   useEffect(() => {
@@ -46,6 +50,18 @@ const Search = () => {
               style={{ color: "#777", fontSize: "1.1rem" }}
               name="search-outline"
             ></ion-icon>
+          </InputAdornment>
+        }
+        endAdornment={
+          <InputAdornment position="end">
+            {searchText && (
+              <IconButton edge="end" onClick={handleOnClearSearchText}>
+                <ion-icon
+                  style={{ fontSize: "1.4rem" }}
+                  name="close-outline"
+                ></ion-icon>
+              </IconButton>
+            )}
           </InputAdornment>
         }
         sx={{ width: { xs: "95%", md: "80%" }, borderRadius: 2 }}

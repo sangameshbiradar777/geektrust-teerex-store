@@ -6,7 +6,9 @@ import { emptyCart } from "../../redux/slice/cartSlice";
 import { updateProductsQuantity } from "../../redux/slice/productsSlice";
 
 function CartValue({ deliveryType, promocode, cartItemsValue }) {
+  const EXPRESS_DELIVERY_COST = 70; // INR
   const cartItems = useSelector((state) => state.cart.items);
+  const activePromocodes = { TREXNEW: 20, GEEKTRUST: 10 };
   const dispatch = useDispatch();
 
   const handleOnOrderPlace = () => {
@@ -35,13 +37,16 @@ function CartValue({ deliveryType, promocode, cartItemsValue }) {
         <Stack direction="row" justifyContent="space-between">
           <Typography>Discount</Typography>
           <Typography variant={"h6"}>
-            ₹{promocode === "TREXNEW" ? cartItemsValue / 20 : 0}
+            ₹
+            {activePromocodes[promocode]
+              ? (cartItemsValue * activePromocodes[promocode]) / 100
+              : 0}
           </Typography>
         </Stack>
         <Stack direction="row" justifyContent="space-between">
           <Typography>Delivery charges</Typography>
           <Typography variant={"h6"}>
-            ₹{deliveryType === "express" ? 70 : 0}
+            ₹{deliveryType === "express" ? EXPRESS_DELIVERY_COST : 0}
           </Typography>
         </Stack>
         <Stack direction="row" justifyContent="space-between">

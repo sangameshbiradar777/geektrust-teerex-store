@@ -24,12 +24,14 @@ const RangeSlider = ({ value, onChange }) => {
       >
         <RangeSliderValue
           value={value[0]}
+          label="Min"
           handleOnRangeSlide={(event) =>
             onChange(event, parseInt(event.target.value), value[1])
           }
         />
         <RangeSliderValue
           value={value[1]}
+          label="Max"
           handleOnRangeSlide={(event) =>
             onChange(event, value[0], parseInt(event.target.value))
           }

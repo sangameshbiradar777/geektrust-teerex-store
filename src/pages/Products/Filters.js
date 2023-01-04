@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   initializeFilters,
@@ -16,7 +16,9 @@ const Filters = ({ isDialog }) => {
   const { allProducts } = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
-  const [minPrice, maxPrice] = getMinAndMaxPrice(allProducts);
+  const [minPrice, maxPrice] = useMemo(
+    () => getMinAndMaxPrice(allProducts), [allProducts]
+  );
 
   const getAvailableFilters = (products, filter) => {
     const filters = [...new Set(products.map((product) => product[filter]))];

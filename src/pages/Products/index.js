@@ -1,7 +1,7 @@
 import Header from "../../components/Header";
 import Filters from "./Filters";
 import Products from "./Products";
-import { Grid, IconButton, Stack, useMediaQuery } from "@mui/material";
+import { Grid, IconButton, Stack, useMediaQuery, CircularProgress } from "@mui/material";
 import Search from "../../components/Search";
 import { useState } from "react";
 import FiltersDialog from "./FiltersDialog";
@@ -71,7 +71,7 @@ const Home = () => {
         py={{ xs: 1, md: 2 }}
         px={{ xs: 1, sm: 2, md: 3 }}
       >
-        <Products />
+        {isLoadingProducts ? <CircularProgress /> : <Products />}
       </Grid>
     </Grid>
   );

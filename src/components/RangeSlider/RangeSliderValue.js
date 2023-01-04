@@ -1,11 +1,11 @@
 import { InputAdornment, TextField } from "@mui/material";
 
-const RangeSliderValue = ({value, handleOnRangeSlide}) => {
+const RangeSliderValue = ({value, handleOnRangeSlide, label}) => {
   return (
     <TextField
       value={value || 0}
       onChange={handleOnRangeSlide}
-      label="Min"
+      label={label}
       size="small"
       InputProps={{
         readOnly: true,

@@ -10,8 +10,6 @@ const ColorFilters = () => {
   const filterProducts = useFilterProducts();
   const dispatch = useDispatch();
 
-  console.log("color filters");
-
   const updateCurrentProductsOnFilterChange = () => {
     const filteredProducts = filterProducts();
     dispatch(updateCurrentProducts(filteredProducts));
